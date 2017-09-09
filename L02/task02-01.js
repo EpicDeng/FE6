@@ -29,6 +29,17 @@
 
 // 以下是提交作业代码
 /* ------------------------------------------------------------------------- */
+var xhair = function(x, y, l) {
+    var newL = l / 2
+    setHeading(0)
+    jump(x - newL, y)
+    forward(l)
+    jump(x, y + newL)
+    setHeading(90)
+    forward(l)
+    jump(x, y)
+}
+
 var polygon = function(x, y, n, l) {
     jump(x, y)
     setHeading(0)
@@ -44,13 +55,9 @@ var polygon = function(x, y, n, l) {
 }
 
 var circle = function(x, y, r) {
-    var n = 36
+    var n = 360
     var l = (2 * Math.PI * r) / n
-    var d = (90 + (360 / n) / 2)
-    left(d)
-    forward(l)
-    right(d)
-    polygon(x, y, n, l)
+    polygon(x, y - r, n, l)
 }
 
 setDelay(0)

@@ -28,7 +28,8 @@ var square = function(x, y, l) {
 
 var square_line = function(x, y, n, space, len) {
     var newX = x
-    var i = 0
+    square(newX, y, len)
+    var i = 1
     while (i < n) {
         newX = newX + len + space
         square(newX, y, len)
@@ -48,5 +49,5 @@ var square_square = function(x, y, space, len, n, m) {
 }
 
 setDelay(0)
-square_square(-250, -190, 5, 50, 7, 5)
+square_square(-190, -190, 5, 50, 7, 5)
 hide()

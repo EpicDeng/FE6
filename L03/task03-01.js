@@ -17,7 +17,7 @@ var sum = function(array) {
 }
 
 var a = [1, 2, 3, 4]
-log('sum', sum(a))
+console.log('sum', sum(a))
 
 // 作业 1
 // 参数是一个只包含数字的 array
@@ -52,4 +52,4 @@ var product = function(array) {
 }
 
 var arr = [1, 3, 5, 7, 9]
-console.log(product(arr))
+log(product(arr))

@@ -29,7 +29,8 @@ var rect = function(x, y, w, h) {
 
 var rect_line = function(x, y, w, h, n, space) {
     var newX = x
-    var i = 0
+    rect(newX, y, w, h)
+    var i = 1
     while (i < n) {
         newX = newX + w + space
         rect(newX, y, w, h)
@@ -38,4 +39,4 @@ var rect_line = function(x, y, w, h, n, space) {
 }
 
 setDelay(0)
-rect_line(-250, 0, 50, 30, 7, 5)
+rect_line(-190, 0, 50, 30, 7, 5)

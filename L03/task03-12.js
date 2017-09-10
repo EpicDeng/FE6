@@ -74,4 +74,4 @@ var forecast = function(temps) {
 var temps = [22, 19, 22, 21, 25, 27, 30, 28]
 setDelay(0)
 forecast(temps)
-hide(0)
+hide()

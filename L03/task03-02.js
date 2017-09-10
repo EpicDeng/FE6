@@ -2,6 +2,7 @@
 // 返回一个数的绝对值
 // 函数定义是
 // var abs = function(n) { }
+//
 
 /*
  * 提示：
@@ -26,5 +27,7 @@ var abs = function(n) {
 
 var n1 = 666
 var n2 = -233
+var n3 = 0
 log(abs(n1))
 log(abs(n2))
+log(abs(n3))

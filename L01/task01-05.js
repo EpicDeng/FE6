@@ -27,7 +27,8 @@ var square = function(x, y, l) {
 
 var square_line = function(x, y, n, space, len) {
     var newX = x
-    var i = 0
+    square(newX, y, len)
+    var i = 1
     while (i < n) {
         newX = newX + len + space
         square(newX, y, len)

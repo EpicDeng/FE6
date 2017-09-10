@@ -37,7 +37,7 @@ var square_line = function(x, y, n, space, len) {
 }
 
 setDelay(0)
-var x = -250
+var x = -190
 var y = -190
 var n = 7
 var space = 5

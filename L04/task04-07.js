@@ -31,6 +31,10 @@ var encode2 = function(s, shift) {
     var lower = "abcdefghijklmnopqrstuvwxyz"
     var upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     var result = ''
+    
+    // 处理一下 shift 大于 26 的情况
+    shift = shift % lower.length
+    
     for (var i = 0; i < s.length; i++) {
         var charIndex = find(lower, s[i])
         if (charIndex != -1) {
@@ -51,8 +55,6 @@ var test_encode2 = function() {
     var s1 = "world"
     var s2 = "javascript"
     var shift = 1
-    log(encode2("hello", 3))
-    log(encode2("world", 3))
     ensure(encode2(s, shift) == 'bga', "encode2(\'" + s + "\', " + shift + ") == 'bga'")
     ensure(encode2(s1, shift + 1) == 'yqtnf', "encode2(\'" + s1 + "\', " + (shift + 1) + ") == 'yqtnf'")
     ensure(encode2(s2, shift + 5) == 'pgbgyixovz', "encode2(\'" + s2 + "\', " + (shift + 5) + ") == 'pgbgyixovz'")

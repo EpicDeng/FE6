@@ -31,6 +31,10 @@ var decode2 = function(s, shift) {
     var lower = "abcdefghijklmnopqrstuvwxyz"
     var upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     var result = ''
+
+    // 处理一下 shift 大于 26 的情况
+    shift = shift % lower.length
+
     for (var i = 0; i < s.length; i++) {
         var charIndex = find(lower, s[i])
         if (charIndex != -1) {

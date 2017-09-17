@@ -1,0 +1,191 @@
+<!--
+// 作业 12
+//
+// 在上个作业的基础上
+// 额外再检查用户名是否符合如下规则
+// 1，只能字母或数字结尾
+// 2，最大长度10
+// 3，只能包含字母、数字、下划线
+//
+// 在上个作业的登录页最后增加一个 <h3></h3> 标签
+// 如果符合规则 设置标签的内容为 '检查合格'
+// 如果不符合, 设置标签的内容为 '用户名错误'
+//
+// 需要补全的代码自行解决
+
+// 以下是提交作业代码
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Fe 6 Lesson 5 Task 11</title>
+    <style>
+    h3 {
+        color: #555;
+        font-size: 110%;
+    }
+    
+    .login-form {
+        font: 95% "微软雅黑", Arial, Helvetica, sans-serif;
+        max-width: 400px;
+        margin: 10px;
+        padding: 16px;
+        background: #F7F7F7;
+    }
+    
+    .login-form h1 {
+        background: #43D1AF;
+        padding: 20px 0;
+        font-size: 140%;
+        font-weight: 300;
+        text-align: center;
+        color: #fff;
+        margin: -16px -16px 16px -16px;
+    }
+    
+    .login-form input[type="text"],
+    .login-form input[type="password"],
+    .login-form textarea,
+    .login-form select {
+        -webkit-transition: all 0.30s ease-in-out;
+        -moz-transition: all 0.30s ease-in-out;
+        -ms-transition: all 0.30s ease-in-out;
+        -o-transition: all 0.30s ease-in-out;
+        outline: none;
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        width: 100%;
+        background: #fff;
+        margin-bottom: 4%;
+        border: 1px solid #ccc;
+        padding: 3%;
+        color: #555;
+        font: 95% "微软雅黑", Arial, Helvetica, sans-serif;
+    }
+    
+    .login-form input[type="text"]:focus,
+    .login-form input[type="password"]:focus,
+    .login-form textarea:focus,
+    .login-form select:focus {
+        box-shadow: 0 0 5px #43D1AF;
+        padding: 3%;
+        border: 1px solid #43D1AF;
+    }
+    
+    .login-form button {
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        width: 100%;
+        padding: 3%;
+        background: #43D1AF;
+        border-bottom: 2px solid #30C29E;
+        border-top-style: none;
+        border-right-style: none;
+        border-left-style: none;
+        color: #fff;
+    }
+    
+    .login-form button:hover {
+        background: #2EBC99;
+        cursor: pointer;
+    }
+    
+    .login-form button:active {
+        background: #43D1AF;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="login-form">
+        <h1>用户登录</h1>
+        <form>
+            <input type="text" id="id-input-username" placeholder="用户名 *">
+            <input type="password" id="id-input-password" placeholder="密码 *">
+            <button type="button" id="id-button-login">登录</button>
+        </form>
+    </div>
+    <script>
+    var log = console.log.bind(console)
+
+    var e = function(selector) {
+        var element = document.querySelector(selector)
+        if (element == null) {
+            var s = `元素没有找到，选择器${selector} 没有找到或者 js 没有放在 body 前面`
+            alert(s)
+        } else {
+            return element
+        }
+    }
+
+    var find = function(sourceString, char) {
+        for (var i = 0; i < sourceString.length; i++) {
+            if (char[0] == sourceString[i]) {
+                return i
+            }
+        }
+
+        return -1
+    }
+
+    var auth = function() {
+        var username = e("#id-input-username")
+        var username_value = username.value
+        var len = username_value.length
+
+        var alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        var digits = "0123456789"
+        var underline = '_'
+
+        var firstChar = username_value[0]
+        var lastChar = username_value[username_value.length - 1]
+        var msg = ''
+
+        if (len == 0) {
+            msg = '<h3 id="id-msg">用户名错误：不能为空！</h3>'
+        } else if (len < 2) {
+            msg = '<h3 id="id-msg">用户名错误：长度不能小于2！</h3>'
+        } else if (len > 10) {
+            msg = '<h3 id="id-msg">用户名错误：长度不能大于10！</h3>'
+        } else if (find(alphabet, firstChar) == -1) {
+            msg = '<h3 id="id-msg">用户名错误：第一位必须是字母！</h3>'
+        } else if (find((alphabet + digits), lastChar) == -1) {
+            msg = '<h3 id="id-msg">用户名错误：最后一位必须是字母或数字！</h3>'
+        } else {
+            for (var i = 0; i < len; i++) {
+                if (find((alphabet + digits + underline), username_value[i]) == -1) {
+                    msg = '<h3 id="id-msg">用户名错误：只能包含字母、数字和下划线！</h3>'
+                    break;
+                }
+            }
+        }
+
+        if (msg == '') {
+            msg = '<h3 id="id-msg">检查合格！</h3>'
+        }
+
+        if (document.getElementById('id-msg') != null) {
+            document.getElementById('id-msg').remove()
+        }
+        var body = e('body')
+        body.insertAdjacentHTML('beforeend', msg)
+    }
+
+    var start = function() {
+        var btn = e("#id-button-login")
+        btn.addEventListener("click", auth);
+    }
+
+    var __main = function() {
+        start()
+    }
+
+    __main()
+    </script>
+</body>
+
+</html>

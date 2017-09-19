@@ -168,8 +168,8 @@
             msg = '<h3 id="id-msg">检查合格！</h3>'
         }
 
-        if (document.getElementById('id-msg') != null) {
-            document.getElementById('id-msg').remove()
+        if (document.querySelector('#id-msg') != null) {
+            document.querySelector('#id-msg').remove()
         }
         var body = e('body')
         body.insertAdjacentHTML('beforeend', msg)

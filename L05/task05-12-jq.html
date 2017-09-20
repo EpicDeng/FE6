@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Fe 6 Lesson 5 Task 12 (jQuery)</title>
+    <sytle>
+        h3 {
+        color: #555;
+        font-size: 110%;
+    }
+
+    .login-form {
+        font: 95% "微软雅黑", Arial, Helvetica, sans-serif;
+        max-width: 400px;
+        margin: 10px;
+        padding: 16px;
+        background: #F7F7F7;
+    }
+
+    .login-form h1 {
+        background: #43D1AF;
+        padding: 20px 0;
+        font-size: 140%;
+        font-weight: 300;
+        text-align: center;
+        color: #fff;
+        margin: -16px -16px 16px -16px;
+    }
+
+    .login-form input[type="text"],
+    .login-form input[type="password"],
+    .login-form textarea,
+    .login-form select {
+        -webkit-transition: all 0.30s ease-in-out;
+        -moz-transition: all 0.30s ease-in-out;
+        -ms-transition: all 0.30s ease-in-out;
+        -o-transition: all 0.30s ease-in-out;
+        outline: none;
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        width: 100%;
+        background: #fff;
+        margin-bottom: 4%;
+        border: 1px solid #ccc;
+        padding: 3%;
+        color: #555;
+        font: 95% "微软雅黑", Arial, Helvetica, sans-serif;
+    }
+
+    .login-form input[type="text"]:focus,
+    .login-form input[type="password"]:focus,
+    .login-form textarea:focus,
+    .login-form select:focus {
+        box-shadow: 0 0 5px #43D1AF;
+        padding: 3%;
+        border: 1px solid #43D1AF;
+    }
+
+    .login-form button {
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        width: 100%;
+        padding: 3%;
+        background: #43D1AF;
+        border-bottom: 2px solid #30C29E;
+        border-top-style: none;
+        border-right-style: none;
+        border-left-style: none;
+        color: #fff;
+    }
+
+    .login-form button:hover {
+        background: #2EBC99;
+        cursor: pointer;
+    }
+
+    .login-form button:active {
+        background: #43D1AF;
+    }
+    </style>
+    <script src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="login-form">
+        <h1>用户登录</h1>
+        <form>
+            <input type="text" id="id-input-username" placeholder="用户名 *">
+            <input type="password" id="id-input-password" placeholder="密码 *">
+            <button type="button" id="id-button-login">登录</button>
+        </form>
+    </div>
+    <script>
+    $(function() {
+        // 检测 IE 8
+        var log = ''
+        if (document.all && !document.addEventListener) {
+            log = function(foo) {};
+        } else {
+            log = console.log.bind(console)
+        }
+
+        var btn = $('#id-button-login')
+        btn.on('click', function(event) {
+            event.preventDefault();
+            /* Act on the event */
+            var username = $("#id-input-username")
+            var username_value = username.val()
+            var len = username_value.length
+
+            var alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            var digits = "0123456789"
+            var underline = '_'
+
+            var firstChar = username_value[0]
+            var lastChar = username_value[username_value.length - 1]
+            var msg = ''
+
+            if (len == 0) {
+                msg = '<h3 id="id-msg">用户名错误：不能为空！</h3>'
+            } else if (len < 2) {
+                msg = '<h3 id="id-msg">用户名错误：长度不能小于2！</h3>'
+            } else if (len > 10) {
+                msg = '<h3 id="id-msg">用户名错误：长度不能大于10！</h3>'
+            } else if (alphabet.indexOf(firstChar) == -1) {
+                msg = '<h3 id="id-msg">用户名错误：第一位必须是字母！</h3>'
+            } else if ((alphabet + digits).indexOf(lastChar) == -1) {
+                msg = '<h3 id="id-msg">用户名错误：最后一位必须是字母或数字！</h3>'
+            } else {
+                for (var i = 0; i < len; i++) {
+                    if ((alphabet + digits + underline).indexOf(username_value[i]) == -1) {
+                        msg = '<h3 id="id-msg">用户名错误：只能包含字母、数字和下划线！</h3>'
+                        break;
+                    }
+                }
+            }
+
+            if (msg == '') {
+                msg = '<h3 id="id-msg">检查合格！</h3>'
+            }
+
+            if ($('#id-msg').length) {
+                $('#id-msg').remove()
+            }
+
+            $('body').append(msg)
+            log("done")
+        });
+    });
+    </script>
+</body>
+
+</html>

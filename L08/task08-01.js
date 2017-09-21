@@ -41,13 +41,13 @@ var findNum = function(source, targetNum) {
         }
     }
 
-    return -1
+    return undefined
 }
 
 var unique = function(a) {
     var result = []
     for (var i = 0; i < a.length; i++) {
-        if (findNum(result, a[i]) == -1) {
+        if (findNum(result, a[i]) == undefined) {
             result.push(a[i])
         }
     }
@@ -58,9 +58,11 @@ var unique = function(a) {
 var testUnique = function() {
     var test1 = [1, 2, 3, 1, 3, 5]
     var test2 = [6, 6, 8, 6, 6, 8]
+    var test3 = [3, 6, 9, 3, 6, 9, 3, 6, 9]
 
     ensure(arrayEquals(unique(test1), [1, 2, 3, 5]), 'unique test 1')
     ensure(arrayEquals(unique(test2), [6, 8]), 'unique test 2')
+    ensure(arrayEquals(unique(test3), [3, 6, 9]), 'unique test 3')
 }
 
 testUnique()

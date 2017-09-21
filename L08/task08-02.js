@@ -73,12 +73,10 @@ var intersection = function(a, b) {
     var result = []
     for (var i = 0; i < len; i++) {
         if (findNum(shorter, longer[i]) != undefined) {
-            var j = 0
-            while (j < shorter.length) {
+            for (var j = 0; j < shorter.length; j++) {
                 if (findNum(longer, shorter[j]) != undefined) {
                     result.push(shorter[j])
                 }
-                j++
             }
         }
     }

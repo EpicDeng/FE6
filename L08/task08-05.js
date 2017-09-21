@@ -77,9 +77,9 @@ function difference(a, b) {
 }
 
 function differenceAll(a, b) {
-    var da = difference(a, b)
-    var db = difference(b, a)
-    var result = union(da, db)
+    var diffA = difference(a, b)
+    var diffB = difference(b, a)
+    var result = union(diffA, diffB)
 
     return result
 }

@@ -15,5 +15,5 @@
 // 以下是提交作业代码
 /* ------------------------------------------------------------------------- */
 var appendHtml = function(element, html) {
-    element.insertAdjacentHTML('beforeEnd', html)
+    element.insertAdjacentHTML('beforeend', html)
 }

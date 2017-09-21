@@ -55,7 +55,6 @@ var unique = function(a) {
     return result
 }
 
-
 var testUnique = function() {
     var test1 = [1, 2, 3, 1, 3, 5]
     var test2 = [6, 6, 8, 6, 6, 8]

@@ -1,0 +1,157 @@
+<!-- 
+// 在上课代码的基础上完成下面的功能
+// 有不会实现的效果完全没关系, 问就是了
+// 尽力能做多少做多少, 不懂早点问, 不要闷头造车浪费时间
+
+作业 1
+实现标签页效果, 步骤如下(标签页效果就是上课写过的一模一样的程序)
+    0, 假设一共有 3 个标签页
+    1, 用 3 个 button 当做标签切换的按钮(加上 class)
+    2, 用 3 个 div 来显示内容(加上 class), 并且加上隐藏显示的样式(默认不显示)
+    3, 给这 3 个 button 添加 data-index 属性来标记他们代表的 div
+    4, 给 3 个 button 绑定 click 事件, 
+        点击的时候把之前显示的 div 隐藏掉(删掉那个用于显示的 class),
+        让被点击的 button 所代表的 div 显示(加上某个 class)
+
+    提示
+    这个是上课讲过的效果, 可参考上课的代码实现
+
+// 以下是提交作业代码
+ -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>>Fe 6 Lesson 9 Task 1</title>
+    <style type="text/css" media="screen">
+    /* Style the tab */
+
+    div.tab {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+    }
+    /* Style the buttons inside the tab */
+
+    div.tab button {
+        background-color: inherit;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        transition: 0.3s;
+    }
+    /* Change background color of buttons on hover */
+
+    div.tab button:hover {
+        background-color: #ddd;
+    }
+    /* Create an active/current tablink class */
+
+    div.tab button.active {
+        background-color: #ccc;
+    }
+    /* Style the tab content */
+
+    div.tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #ccc;
+        border-top: none;
+    }
+
+    div.tabcontent h3 {
+        color: #398080;
+    }
+
+    div.tabcontent p {
+        font-size: 20px;
+        line-height: 22px;
+        font-style: italic;
+        text-align: left;
+        margin: 0;
+        color: #777;
+        padding-left: 15px;
+        font-family: "楷体", Georgia, serif;
+        border-left: 8px solid rgba(63, 148, 148, 0.1);
+    }
+
+    .show {
+        display: block !important;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="tab">
+        <button class="tabs">语录1</button>
+        <button class="tabs">语录2</button>
+        <button class="tabs">语录3</button>
+    </div>
+    <div class="tabcontent">
+        <h3>语录1</h3>
+        <p>我说另请高明吧，我实在也不是谦虚！</p>
+    </div>
+    <div class="tabcontent">
+        <h3>语录2</h3>
+        <p>我是身经百战，见得多了！</p>
+    </div>
+    <div class="tabcontent">
+        <h3>语录3</h3>
+        <p>今天是得罪了你们一下！</p>
+    </div>
+    <script>
+    var log = console.log.bind(console)
+
+    var bindAll = function(selector, eventName, callback, responseClass) {
+        var elements = document.querySelectorAll(selector)
+        for (var i = 0; i < elements.length; i++) {
+            var e = elements[i]
+            e.addEventListener(eventName, function(event) {
+                var self = event.target
+                if (self.classList.contains(responseClass)) {
+                    callback(event)
+                }
+            })
+        }
+    }
+
+    var setButtonsDataIndex = function() {
+        var tabs = document.querySelectorAll('.tabs')
+        for (var i = 0; i < tabs.length; i++) {
+            tabs[i].dataset.index = i
+        }
+    }
+
+    var __main = function() {
+        setButtonsDataIndex()
+
+        bindAll('.tab', 'click', function(event) {
+            var self = event.target
+            var index = self.dataset.index
+
+            var buttons = document.querySelectorAll('.tabs')
+            for (var i = 0; i < buttons.length; i++) {
+                if (buttons[i].classList.contains('active')) {
+                    buttons[i].classList.remove('active')
+                }
+            }
+            self.classList.toggle('active')
+
+            var contents = document.querySelectorAll('.tabcontent')
+            for (var i = 0; i < contents.length; i++) {
+                if (contents[i].classList.contains('show')) {
+                    contents[i].classList.remove('show')
+                }
+            }
+            contents[index].classList.toggle('show')
+        }, 'tabs')
+    }
+
+    __main()
+    </script>
+</body>
+
+</html>

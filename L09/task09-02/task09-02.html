@@ -1,0 +1,219 @@
+<!--
+作业 2
+点击切换图片的相册
+    0, 相册分上下两栏, 上面用来显示当前的大图, 下面用来显示一排缩略图
+        当用户点击下面的缩略图的时候, 上面的大图切换为被点击的缩略图
+    1, 先写出 html, 假设有 3 张图片, 上面是一个 img 标签, 下面是 3 个 img 标签
+    2, 给下面的 img 标签绑定上 click 事件
+    3, 通过 img.src 这个属性来读取/设置 img 标签的图片, 这样就能实现功能了
+
+    提示
+    css 不会写就不要写, 实现功能即可
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Fe 6 Lesson 9 Task 2</title>
+    <style type="text/css" media="screen">
+    * {
+        padding: 0;
+        margin: 0;
+    }
+    
+    #id-image-container {
+        margin: 16px 0px;
+        padding-left: 40px;
+        max-width: 800px;
+        width: 800px;
+        max-height: 450px;
+        height: 450px;
+        overflow: hidden;
+    }
+    
+    .image {
+        -webkit-transition: all 1s ease-in-out;
+        -moz-transition: all 1s ease-in-out;
+        -o-transition: all 1s ease-in-out;
+        transition: all 1s ease-in-out;
+    }
+    
+    .anim_image_hidden {
+        transform: scale(0, 0);
+        opacity: 0;
+        filter: Alpha(opacity=0);
+        transform-origin: 20% 40%;
+    }
+    
+    .anim_image_show {
+        opacity: 1;
+        filter: Alpha(opacity=100);
+        transform: scale(1, 1);
+        transform-origin: 20% 40%;
+    }
+    
+    ul#id-image-gallery {
+        margin: 16px 0px;
+        padding-left: 40px;
+    }
+    
+    ul#id-image-gallery li {
+        position: relative;
+        list-style-type: none;
+        display: inline;
+        margin-right: 10px;
+    }
+    
+    .images {
+        cursor: pointer;
+        width: 192px;
+        max-width: 192px;
+        height: 120px;
+        max-height: 120px;
+        opacity: 0.7;
+    }
+    
+    .active {
+        -webkit-transition: 0.2s ease;
+        -moz-transition: 0.2s ease;
+        -ms-transition: 0.2s ease;
+        -o-transition: 0.2s ease;
+        transition: 0.2s ease;
+        opacity: 1;
+        background: rgba(0, 0, 0, 1);
+    }
+    
+    .gallery-image-overlay {
+        cursor: pointer;
+        display: block;
+        background: rgba(0, 0, 0, 0.7);
+        position: absolute;
+        left: 0;
+        bottom: 4px;
+        width: 192px;
+        height: 0px;
+        z-index: 1;
+        color: #fff;
+        font-family: "微软雅黑", Arial, sans-serif;
+        text-align: center;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    
+    .floatup {
+        -webkit-transition: 0.3s ease;
+        -moz-transition: 0.3s ease;
+        -ms-transition: 0.3s ease;
+        -o-transition: 0.3s ease;
+        transition: 0.3s ease;
+        height: 20px;
+        padding: 5px 0px;
+    }
+    
+    .floatdown {
+        -webkit-transition: 0.3s ease;
+        -moz-transition: 0.3s ease;
+        -ms-transition: 0.3s ease;
+        -o-transition: 0.3s ease;
+        transition: 0.3s ease;
+        height: 0px;
+        padding: 0px 0px;
+    }
+    </style>
+</head>
+
+<body>
+    <section id="id-image-container">
+        <img class="image anim_image_show" src="paris.jpg" />
+    </section>
+    <ul id="id-image-gallery">
+        <li>
+            <img src="paris.jpg" alt="Paris" class="images active" />
+            <span class="gallery-image-overlay">巴黎</span>
+        </li>
+        <li>
+            <img src="shanghai.jpg" alt="Shanghai" class="images" />
+            <span class="gallery-image-overlay">上海</span>
+        </li>
+        <li>
+            <img src="new-york.jpg" alt="New York" class="images" />
+            <span class="gallery-image-overlay">纽约</span>
+        </li>
+    </ul>
+    <script>
+    var log = console.log.bind(log)
+
+    var bindAllwithClass = function(selector, eventName, callback, responseClass) {
+        var elements = document.querySelectorAll(selector)
+        for (var i = 0; i < elements.length; i++) {
+            var e = elements[i]
+            e.addEventListener(eventName, function(event) {
+                var self = event.target
+                if (self.classList.contains(responseClass)) {
+                    callback(event)
+                }
+            })
+        }
+    }
+
+    var bindAll = function(elements, eventName, callback) {
+        for (var i = 0; i < elements.length; i++) {
+            var tag = elements[i]
+            tag.addEventListener(eventName, callback)
+        }
+    }
+
+    var clearClass = function(selector, targetClass) {
+        var elements = document.querySelectorAll(selector)
+        for (var i = 0; i < elements.length; i++) {
+            if (elements[i].classList.contains(targetClass)) {
+                elements[i].classList.remove(targetClass)
+                log("done")
+            }
+        }
+    }
+
+    var __main = function() {
+        bindAllwithClass('#id-image-gallery', 'click', function(event) {
+            var self = event.target
+            var src = self.src
+            var image_container = document.querySelector('#id-image-container')
+            var image = image_container.querySelector('img')
+
+            clearClass('.image', 'anim_image_show')
+            image.classList.add('anim_image_hidden')
+            setTimeout(function() {
+                image.classList.remove('anim_image_hidden')
+                image.src = src
+                image.classList.add('anim_image_show')
+            }, 1000)
+
+            clearClass('.images', 'active')
+            self.classList.toggle('active')
+        }, 'images')
+
+
+        var images = document.querySelectorAll('.images')
+
+        bindAll(images, 'mouseover', function(event) {
+            var self = event.target
+            var span = self.closest('li').querySelector('span')
+            span.classList.remove('floatdown')
+            span.classList.add('floatup')
+        })
+
+        bindAll(images, 'mouseout', function(event) {
+            var self = event.target
+            var span = self.closest('li').querySelector('span')
+            span.classList.remove('floatup')
+            span.classList.add('floatdown')
+        })
+
+    }
+
+    __main()
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Fe 6 Lesson 10 Task 1</title>
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+    .gua-hide {
+        display: none;
+    }
+
+    .gua-menu-content {
+        height: 100px;
+        border: 1px solid red;
+    }
+
+    .gua-item {
+        /*display: inline-block;*/
+        /*opacity: 0.6;*/
+        filter: grayscale(100%);
+    }
+
+    .gua-item.gua-highlight {
+        filter: initial;
+        /*opacity: 1;*/
+    }
+
+    .gua-item.gua-highlight img {
+        width: 150px;
+        height: 150px;
+    }
+
+    img {
+        /*transition 这个 css 指定了某个属性发生变化的时候自动使用动画效果和动画时间*/
+        transition: width 1s, height 1s;
+    }
+
+    .gua-item img {
+        width: 100px;
+        height: 100px;
+    }
+    /*3. 轮播图*/
+
+    .my-slider {
+        position: relative;
+        width: 590px;
+    }
+
+    .slider-image {
+        display: none;
+    }
+    /*gua-slide-image*/
+
+    .image-active {
+        display: inline-block;
+    }
+
+    .my-slider-button {
+        visibility: hidden;
+        height: 50px;
+        width: 30px;
+        color: white;
+        background: black;
+        opacity: 0.3;
+        border: none;
+        cursor: pointer;
+    }
+
+    .my-slider-button:hover {
+        opacity: 0.7;
+    }
+
+    .my-slider-button:focus {
+        outline: none;
+    }
+
+    .slider-left-button {
+        left: 0;
+    }
+
+    .slider-right-button {
+        right: 0;
+    }
+
+    /* 用来垂直居中一个元素的套路 css */
+    .vertical-center {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .my-slider-ind-container {
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+    }
+
+    .slider-ind {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: white
+        /* margin: 0px 5px;*/
+    }
+
+    .ind-current {
+        background: #DB192A;
+    }
+
+    .click-through {
+        pointer-events: none;
+    }
+
+    .my-slider-ind-container {
+        position: absolute;
+        z-index: 1;
+        left: 50%;
+        bottom: 20px;
+        font-size: 0;
+        letter-spacing: 5px;
+        padding: 4px 8px;
+        border-radius: 12px;
+        background-color: hsla(0, 0%, 100%, .3);
+    }
+    </style>
+</head>
+
+<body>
+    <!-- 轮播图 -->
+    <div class="my-slider-container">
+        <!-- data-imgs 是图片的总数 -->
+        <!-- data-active 是当前显示的图片的下标 -->
+        <div class="my-slider" data-imgs="3" data-active="0">
+            <img id="id-slider-image-0" class="slider-image image-active" src="slider_images/1.jpg" alt="">
+            <img id="id-slider-image-1" class="slider-image" src="slider_images/2.jpg" alt="">
+            <img id="id-slider-image-2" class="slider-image" src="slider_images/3.jpg" alt="">
+            <button class="my-slider-button slider-left-button vertical-center" data-offset="-1">
+                <i class="fa fa-angle-left 2x fa-2x click-through"></i>
+            </button>
+            <button class="my-slider-button slider-right-button vertical-center" data-offset="1">
+                <i class="fa fa-angle-right fa-2x click-through"></i>
+            </button>
+            <div class="my-slider-ind-container">
+                <div id="id-ind-0" class="slider-ind ind-current" data-index="0"></div>
+                <div id="id-ind-1" class="slider-ind" data-index="1"></div>
+                <div id="id-ind-2" class="slider-ind" data-index="2"></div>
+            </div>
+        </div>
+    </div>
+    <script src="my_lib.js"></script>
+    <script src="my_slider.js"></script>
+</body>
+
+</html>

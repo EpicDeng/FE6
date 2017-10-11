@@ -122,13 +122,6 @@
         }
     }
 
-    var bindTrackLoop = function(audioplayer) {
-        bindEvent(audioplayer, 'ended', function() {
-            log("已开启自动循环播放")
-            audioplayer.play()
-        })
-    }
-
     var bindAudioPlayer = function() {
         var audioPlayer = e('#id-audio-player')
         bindBtnPlay(audioPlayer)
@@ -137,7 +130,6 @@
         showTrackDuration(audioPlayer)
         showTrackList()
         bindTrackPlay(audioPlayer)
-        bindTrackLoop(audioPlayer)
     }
 
     var __main = function() {

@@ -1,10 +1,3 @@
-<!-- 
-作业 1
-实现播放器的基本界面(不要求 css, 只写 html 即可)
-    0, 页面中添加一个 audio 标签, 设置一个 音乐文件（最好取名 1.mp3）
-    1, 页面中添加 2 个按钮分别是(播放 暂停)
-    2, 给 2 个按钮分别绑定上播放和暂停 audio 的事件
--->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,7 +35,7 @@
     var bindBtnPlay = function(audioplayer) {
         var btn = e('#id-audio-player-button-play')
         bindEvent(btn, 'click', function() {
-            audioplayer.play()
+            audioPlayer.play()
             log("播放")
         })
     }
@@ -50,12 +43,12 @@
     var bindBtnPause = function(audioplayer) {
         var btn = e('#id-audio-player-button-pause')
         bindEvent(btn, 'click', function() {
-            audioplayer.pause()
+            audioPlayer.pause()
             log("暂停")
         })
     }
 
-    var bindAudioPlayer = function() {
+    var bindAudioPlayer= function() {
         var audioPlayer = e('#id-audio-player')
         bindBtnPlay(audioPlayer)
         bindBtnPause(audioPlayer)

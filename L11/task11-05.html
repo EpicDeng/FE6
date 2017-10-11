@@ -1,0 +1,179 @@
+<!--
+作业 5        
+实现循环播放列表
+    0, 用一个数组存储所有的音乐路径
+    1, audio 标签有一个 ended 事件, 会在播放结束后触发
+        用这个事件实现播放结束自动播放下一首
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Fe 6 Lesson 11 Task 5</title>
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="audio-player-container">
+        <audio id="id-audio-player" src="1.mp3" controls>您的浏览器不支持 audio 标签。</audio>
+    </div>
+    <div class="audio-player-buttons-container">
+        <button id="id-audio-player-button-play" class="fa fa-play"></button>&nbsp;
+        <button id="id-audio-player-button-pause" class="fa fa-pause"></button>
+    </div>
+    <div class="audio-player-info-container">
+        <p>
+            <span id="id-current-at">0:00</span>&nbsp;/
+            <span id="id-track-duration"></span>
+        </p>
+    </div>
+    <div class="audio-player-track-list-container">
+        <div class="track" data-path="1.mp3"></div>
+        <div class="track" data-path="2.mp3"></div>
+        <div class="track" data-path="3.mp3"></div>
+    </div>
+    <p>已开启列表循环播放</p>
+    <script>
+    var log = console.log.bind(log)
+
+    var e = function(selector) {
+        var element = document.querySelector(selector)
+        if (element == null) {
+            var s = `元素没找到，选择器 ${selector} 没有找到或者 js 没有放在 body 里`
+            alert(s)
+        } else {
+            return element
+        }
+    }
+
+    var es = function(selector) {
+        var elements = document.querySelectorAll(selector)
+        if (elements.length == 0) {
+            var s = `元素没找到，选择器 ${selector} 没有找到或者 js 没有放在 body 里`
+            alert(s)
+        } else {
+            return elements
+        }
+    }
+
+    var bindEvent = function(element, eventName, callback) {
+        element.addEventListener(eventName, callback)
+    }
+
+    var bindBtnPlay = function(audioplayer) {
+        var btn = e('#id-audio-player-button-play')
+        bindEvent(btn, 'click', function() {
+            audioplayer.play()
+            log("播放")
+        })
+    }
+
+    var bindBtnPause = function(audioplayer) {
+        var btn = e('#id-audio-player-button-pause')
+        bindEvent(btn, 'click', function() {
+            audioplayer.pause()
+            log("暂停")
+        })
+    }
+
+    var formatSec = function(s) {
+        var sec = Math.floor(s)
+        return (sec - (sec %= 60)) / 60 + (9 < sec ? ':' : ':0') + sec
+    }
+
+    var showTrackCurrentTime = function(audioplayer) {
+        bindEvent(audioplayer, 'canplay', function() {
+            var interval = 1000
+            var clockId = setInterval(function() {
+                // 每 1s 都会调用这个函数
+                var span = e('#id-current-at')
+                span.innerHTML = formatSec(audioplayer.currentTime)
+            }, interval)
+        })
+    }
+
+    var showTrackDuration = function(audioplayer) {
+        bindEvent(audioplayer, 'canplay', function() {
+            var dur = audioplayer.duration
+            var span = e('#id-track-duration')
+            span.innerHTML = formatSec(dur)
+        })
+    }
+
+    var appendTrackList = function(selector) {
+        var tracks = es(selector)
+        for (var i = 0; i < tracks.length; i++) {
+            var path = tracks[i].dataset.path
+            tracks[i].innerHTML = path
+        }
+    }
+
+    var bindTrackPlay = function(audioplayer) {
+        var tracks = es('.track')
+        for (var i = 0; i < tracks.length; i++) {
+            bindEvent(tracks[i], 'click', function(event) {
+                var self = event.target
+                audioplayer.src = self.dataset.path
+                bindEvent(audioplayer, 'canplay', function() {
+                    audioplayer.play()
+                })
+            })
+        }
+    }
+
+    var bindTrackLoop = function(audioplayer) {
+        bindEvent(audioplayer, 'ended', function() {
+            audioplayer.play()
+            log("已开启单曲循环播放")
+        })
+    }
+
+    var getTrackList = function(selector) {
+        var tracks = es(selector)
+        var arr = []
+        for (var i = 0; i < tracks.length; i++) {
+            var path = tracks[i].dataset.path
+            arr.push(path)
+        }
+
+        return arr
+    }
+
+    var nextTrack = function(audioplayer) {
+        var list = getTrackList('.track')
+        var src = audioplayer.src.split('/').slice(-1)[0]
+        var index = list.indexOf(src)
+        var len = list.length
+        var nextIndex = (len + index + 1) % len
+
+        return list[nextIndex]
+    }
+
+    var bindTrackListLoop = function(audioplayer) {
+        bindEvent(audioplayer, 'ended', function() {
+            audioplayer.src = nextTrack(audioplayer)
+            log("自动循环到下一首")
+        })
+    }
+
+    var bindAudioPlayer = function() {
+        var audioPlayer = e('#id-audio-player')
+        bindBtnPlay(audioPlayer)
+        bindBtnPause(audioPlayer)
+        showTrackCurrentTime(audioPlayer)
+        showTrackDuration(audioPlayer)
+        appendTrackList('.track')
+        bindTrackPlay(audioPlayer)
+        bindTrackListLoop(audioPlayer)
+    }
+
+    var __main = function() {
+        bindAudioPlayer()
+    }
+
+    __main()
+    </script>
+</body>
+
+</html>

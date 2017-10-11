@@ -1,0 +1,72 @@
+<!-- 
+作业 1
+实现播放器的基本界面(不要求 css, 只写 html 即可)
+    0, 页面中添加一个 audio 标签, 设置一个 音乐文件（最好取名 1.mp3）
+    1, 页面中添加 2 个按钮分别是(播放 暂停)
+    2, 给 2 个按钮分别绑定上播放和暂停 audio 的事件
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Fe 6 Lesson 11 Task 1</title>
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="audio-player-container">
+        <audio id="id-audio-player" src="1.mp3" controls>您的浏览器不支持 audio 标签。</audio>
+    </div>
+    <div class="audio-player-buttons-container">
+        <button id="id-audio-player-button-play" class="fa fa-play"></button>&nbsp;
+        <button id="id-audio-player-button-pause" class="fa fa-pause"></button>
+    </div>
+    <script>
+    var log = console.log.bind(log)
+
+    var e = function(selector) {
+        var element = document.querySelector(selector)
+        if (element == null) {
+            var s = `元素没找到，选择器 ${selector} 没有找到或者 js 没有放在 body 里`
+            alert(s)
+        } else {
+            return element
+        }
+    }
+
+    var bindEvent = function(element, eventName, callback) {
+        element.addEventListener(eventName, callback)
+    }
+
+    var bindBtnPlay = function(audioplayer) {
+        var btn = e('#id-audio-player-button-play')
+        bindEvent(btn, 'click', function() {
+            audioplayer.play()
+            log("播放")
+        })
+    }
+
+    var bindBtnPause = function(audioplayer) {
+        var btn = e('#id-audio-player-button-pause')
+        bindEvent(btn, 'click', function() {
+            audioplayer.pause()
+            log("暂停")
+        })
+    }
+
+    var bindAudioPlayer = function() {
+        var audioPlayer = e('#id-audio-player')
+        bindBtnPlay(audioPlayer)
+        bindBtnPause(audioPlayer)
+    }
+
+    var __main = function() {
+        bindAudioPlayer()
+    }
+
+    __main()
+    </script>
+</body>
+
+</html>

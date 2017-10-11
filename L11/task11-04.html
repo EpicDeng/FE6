@@ -124,8 +124,8 @@
 
     var bindTrackLoop = function(audioplayer) {
         bindEvent(audioplayer, 'ended', function() {
-            log("已开启单曲循环播放")
             audioplayer.play()
+            log("已开启单曲循环播放")
         })
     }
 

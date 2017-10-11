@@ -33,7 +33,7 @@
         <div class="track" data-path="2.mp3"></div>
         <div class="track" data-path="3.mp3"></div>
     </div>
-    <p>已开启自动循环播放</p>
+    <p>已开启单曲循环播放</p>
     <script>
     var log = console.log.bind(log)
 
@@ -124,7 +124,7 @@
 
     var bindTrackLoop = function(audioplayer) {
         bindEvent(audioplayer, 'ended', function() {
-            log("已开启自动循环播放")
+            log("已开启单曲循环播放")
             audioplayer.play()
         })
     }

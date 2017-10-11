@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Fe 6 Lesson 11 Task 2</title>
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="audio-player-container">
+        <audio id="id-audio-player" src="1.mp3" controls>您的浏览器不支持 audio 标签。</audio>
+    </div>
+    <div class="audio-player-buttons-container">
+        <button id="id-audio-player-button-play" class="fa fa-play"></button>&nbsp;
+        <button id="id-audio-player-button-pause" class="fa fa-pause"></button>
+    </div>
+    <div class="audio-player-info-container">
+        <p>
+            <span id="id-current-at">0:00</span>&nbsp;/
+            <span id="id-track-duration"></span>
+        </p>
+    </div>
+    <script>
+    var log = console.log.bind(log)
+
+    var e = function(selector) {
+        var element = document.querySelector(selector)
+        if (element == null) {
+            var s = `元素没找到，选择器 ${selector} 没有找到或者 js 没有放在 body 里`
+            alert(s)
+        } else {
+            return element
+        }
+    }
+
+    var bindEvent = function(element, eventName, callback) {
+        element.addEventListener(eventName, callback)
+    }
+
+    var bindBtnPlay = function(audioplayer) {
+        var btn = e('#id-audio-player-button-play')
+        bindEvent(btn, 'click', function() {
+            audioplayer.play()
+            log("播放")
+        })
+    }
+
+    var bindBtnPause = function(audioplayer) {
+        var btn = e('#id-audio-player-button-pause')
+        bindEvent(btn, 'click', function() {
+            audioplayer.pause()
+            log("暂停")
+        })
+    }
+
+    var formatSec = function(s) {
+        var sec = Math.floor(s)
+        return (sec - (sec %= 60)) / 60 + (9 < sec ? ':' : ':0') + sec
+    }
+
+    var showTrackCurrentTime = function(audioplayer) {
+        bindEvent(audioplayer, 'canplay', function() {
+            var interval = 1000
+            var clockId = setInterval(function() {
+                // 每 1s 都会调用这个函数
+                var span = e('#id-current-at')
+                span.innerHTML = formatSec(audioplayer.currentTime)
+            }, interval)
+        })
+    }
+
+    var showTrackDuration = function(audioplayer) {
+        bindEvent(audioplayer, 'canplay', function() {
+            var dur = audioplayer.duration
+            var span = e('#id-track-duration')
+            span.innerHTML = formatSec(dur)
+        })
+    }
+
+    var bindAudioPlayer = function() {
+        var audioPlayer = e('#id-audio-player')
+        bindBtnPlay(audioPlayer)
+        bindBtnPause(audioPlayer)
+        showTrackCurrentTime(audioPlayer)
+        showTrackDuration(audioPlayer)
+    }
+
+    var __main = function() {
+        bindAudioPlayer()
+    }
+
+    __main()
+    </script>
+</body>
+
+</html>
